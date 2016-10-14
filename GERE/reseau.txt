@@ -1,0 +1,176 @@
+IPV4
+
+Il est possible que plusieurs hotes différents aient la même IP.
+	ex : le serveur DNS de google 8.8.8.8 correspond en réalité à plusieurs serveurs physiques dans le monde.
+
+Très difficile de savoir si une adresse IPV4 est déjà utilisée, notamment car des blocs d'adresse peuvent éventuellement être revendus à des FAI différents dans plusieurs pays.
+
+Si jamais une ip en double, on s'arrange avec la notion de proximité : c'est le serveur le plus proche qui sera choisi
+	⇒  Le métrique
+
+Une adresse MAC peut correspondre à plusieurs adresses IPV4.
+On a un bloc 127.0.0.1 à 127.255.255.254 pour le loopback ⇒ gachis de beaucoup d'adresses...
+
+===========================================================================================================================
+ICMP
+Est composé d'un type de paquet et d'un champ réponse
+
+Types de paquets ICP
+
+1 et 2 réservé pour utilisation future
+
+Type 4 : echo request
+	Demande de renvoi d'info
+	Ping standart
+
+Type 0 echo reply
+	reponse
+
+
+Type 3 : destination inaccessible avec un code de retour
+	0 : réseau inacessible
+	1 machine pas accessible
+	2 protocole inacessible
+	3 le port n'est pas acessible
+	4 la fragmentation nécessaire mais impossible à cause du flag DF : on a essayé d'envoyer des données, sauf qu'on a un paquet trop lourd qu'il faudrait fragmenter. Sauf qu'on a mit DF (don't fragment) et du coup le routeur est perdu
+
+
+Type 9 : conection avec le réseau interdite
+Type 10 : co avec la machine interdite
+Type 11 : temps dépassé
+Type 12 : entête erroné
+Type 13 :
+Type 14 :
+Type 15 :
+
+Type 5: redirection
+	Il y a un chemin plus court pour joindre ce host.
+
+
+ICMP ne permet pas que de faire du ping, c'est aussi des messages d'optimisation du réseau.
+
+===========================================================================================================================
+TRACEROUTE
+
+Il commence par envoyer un paquet IPV4 avec un TTL de 1 avec commme adresse l'host qu'on veut joindre.
+La couche IP envoie le paquet au bon endroit puis rm le paquet vu que son ttl est de 1, puis renvoie une réponse ICMP pour dire qu'il a rm le paquet.
+
+On envoie ensuite un paquet avec un TTL de 2 : donc on passe les deux premiers routeurs.
+
+Il s'utilise via un nom de domaine ou une IPV4
+Il permet de lister les routeurs traversés pour joindre un hôte.
+On peut l'utiliser sans résolution DNS pour ne pas utiliser DNS
+On peut utiliser des paquest TCP plutôt que UDP via -T
+Il arrive que certains routeurs ne donnent pas d'informations (* * *) : l'admin a configuré le routeur pour ne pas donner de réponse aux traceroute en TCP UDP ou les deux
+Il répondra forcément si on utilise l'option -I (ICMP) car on ne peut pas interdire ICMP.
+===========================================================================================================================
+IPv6
+-------------------------------------------------------------------------------
+On aura un TP noté dessus !
+Penser à installer VB sur les pc !
+-------------------------------------------------------------------------------
+On a de moins en moins d'adresses IPV4
+On en a gaspillé pas mal
+
+PB du NAT : on a que 65 000 ports disponibles. Au final c'est assez limité pour les sites modernes.
+
+ICANN : autorité de régulation sur internet
+Gère DNS et les IPV4
+
+IANA : autorité de régulation des adresses IP
+
+RIR : regional internet registry
+Ils gèrent les blocs fournis par l'IANA.
+
+Ils découpent ensuite ces blocs en LIR(Local Internet Registry)
+
+Les LIR fournissent des IP a des clients finaux.
+
+En Asie : ils font du NAT dans du NAT pour économiser encore plus d'adresses.
+
+ICMPv6 est très différent d'ICMPv4
+
+Pas de NAT en IPv6
+
+Ethernet et TCP ont été adaptés pour pouvoir utiliser IPv6
+
+Chaque mot est séparé par ':'
+
+Attention : 1996 devrait se prononcer un neuf neuf six et pas mil neuf cent quatre vingt seize
+Bah ouais, c'est de l'hexa !
+
+L'adresse est découpée en deux parties : id réseau et id host
+
+Les 64 premiers bits : network id
+
+Toujours noté en CIDR : X:Y:Z::/NN -> On ne parle pu de netmask
+
+Boucle locale en IPv6 : ::1/128 -> UNE SEULE adresse :D
+
+LES TYPES D'ADRESSES 
+De lien local
+	-> Niveau Ethernet
+	-> Sans passer par un routeur
+
+De site local (déprécié)
+	-> locaux au même endroit
+	-> une filiale
+	-> une association
+	-> un particulier
+	
+	!> 2 filiales
+	!> 2 sites géographiques
+
+	But : imiter les IPv4 privées, permettre à tout le monde de test IPv6 en interne
+
+Globale
+	Correspond à une adresse publique
+	Routable sur internet
+
+Pu de broadcast en IPv6
+
+Unicast :
+	-> Associée à un seul hote
+	-> Unique sur le lien, le site ou globalement
+	-> Peut discuter sur le Local
+	-> But : création d'un réseau interne
+	-> Ne passe PAS le routeur
+
+Unicast de lien local : 
+
+Unicast de site local :
+	-> Pas routable sur internet
+
+
+Anycast :
+	-> Un groupe d'hotes
+	-> Un seul hote du groupe doit répondre
+	-> Requete DHCP : le plus proche répond
+	-> DNS : le plus proche répond
+
+Multicast :
+	-> Un groupe
+	-> Tous les membres du groupe sont desinataires
+
+Une interface aura PLUSIEURS adresses IPv6
+
+SLAAC : stateLess Adress Auto Configuration
+
+Un préfixe IPv6 est réservé : FE::/10
+
+Obtenir un préfixe unique : 
+	- se baser sur un truc déjà Unique
+	- utiliser une fonction de dérivation donnant un résultat unique
+	- controler la non duplication
+
+On a juste 64 bits à générer
+
+Une adresse Multicast commence par FF
+
+FF00 : réservé
+FF01 : Multicast machine locale
+FF02 : Multicast de lient local
+FF05 : adresse Multicast de site Local
+FF0E : adrese Multicast Globale
+===========================================================================================================================
+

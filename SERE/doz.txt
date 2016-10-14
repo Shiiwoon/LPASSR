@@ -1,0 +1,10 @@
+Attention : certains services ne peuvent pas être activés en même temps
+Les serveurs sont accessibles en mode graphique ou juste en accès aux fichiers
+Pour lancer un bureau à distance : mstsc
+
+MMC : accès aux fichiers du serveur
+
+
+Batch : Cmd.exe
+VBScript
+PowerShell

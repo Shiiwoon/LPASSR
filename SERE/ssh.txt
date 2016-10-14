@@ -1,0 +1,60 @@
+###########################################################################################################################
+SSH
+###########################################################################################################################
+--Connexion de base
+Pour se co à un serveur, on a pas besoin de préciser le login si c'est le même que celui avec lequel on est.
+	-> Si on est root et qu'on veut se connecter avec l'utilisateur root sur le serveur, on peut juste faire "ssh server"
+
+--Clés SSH
+Pourquoi les utiliser :
+- retenir les mdp est contraignant
+- il suffit de connaitre le mdp pour pouvoir se co au serveur
+- obligé de taper le mdp à chaque fois
+
+--Principe des clés SSH :
+- génération de deux clés :
+	- une clé privée : doit rester sur le client (JAMAIS sur le serveur)
+	- une clé publique : doit être copiée sur les serveurs sur lesquels on souhaite se co.
+- les clés fonctionnent par paire. Une clé publique va avec une clé privée.
+
+--Génération des clés SSH:
+Se mettre dans .ssh
+ssh-keygen
+Choisir le chemin du fichier dans lequel sauver la clé si on ne veut pas mettre dans .ssh/id_rsa
+Choisir une passphrase
+
+Deux fichiers ont normalement été créés : un fichier du nom que l'on a choisit et un fichier avec l'extention.pub
+
+--Hasher vs Chiffrer
+Hasher : On applique une fonction de hashage. Hash unique. Permet de vérifier une information. Non réversible.
+Chiffrer : L'opération est réversible.
+
+###########################################################################################################################
+SCP
+###########################################################################################################################
+On peut faire un scp sur un serveur sans préciser où on veut copier le fichier :
+	-> scp fichier.txt server:
+
+###########################################################################################################################
+FTP:
+###########################################################################################################################
+- non crypté
+- port 21 pour la connexion
+- Utilise un nombre variable de ports utilisés pour les transferts et qui sont ouverts aléatoirements.
+
+SFTP:
+- crypté
+- comme FTP mais en crypté
+- utilisation du port 22 pour la connexion
+
+IP
+Si on pique l'IP d'une machine déjà présente sur le réseau, ça ne va pas déco la machine qui a eu cette IP en premier. Ça va juste faire des trucs chelous du genre donner la mauvaise réponse à la requête.
+
+NAT
+--Redirection de ports sur le routeur
+Rediriger 127.0.0.1 vers IP du PC sur lequel rediriger
+Par exemple
+Dans le routeur :
+Rediriger un port > 1024 vers l'ip du PC
+Quand on veut se co en ssh :
+ssh -p portCHOISI loginpc@IPROUTEUR

@@ -1,0 +1,5 @@
+snapshot/instantané : création d'un second fichier de VM pour permettre d'annuler des modifications.
+
+Attention : création des snapshot il faut préciser le bon dossier (/data/etudiants)
+
+

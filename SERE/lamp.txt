@@ -1,0 +1,25 @@
+Des équivalents d'Apache : NGinX et 2IS
+
+DNS:
+
+FQDN : Fully Qualified Domain Name
+L'ordi commence par lire le fichier hosts local avant d'interroger un serveur DNS.
+
+DMZ : zone réseau exposée à internet
+
+MySQL : Ensemble trucs MySQL
+MySQLd : daemon MySQL
+mysql : client MySQL
+
+Éviter au maximum d'avoir le serveur Apache et de MySQL sur la même machine.
+La DMZ doit permettre d'accéder uniquement à Apache.
+
+L'administrateur a le droit de donner des droits
+
+Les droits MySQL concernent un utilisateur ET un host.
+On met % pour dire "depuis n'importe quel hote"
+Généralement, on restraint les droit via l'hote pour l'application : elle doit accéder à la bdd uniquement depuis son hote.
+
+bind-adress : accepter les connexions provenant de telle ip.
+Pour dire tout le monde : 0:0:0:0
+On ne peut pas autoriser un groupe d'ip. On peut autoriser soit une seule IP, soit tout le monde.
