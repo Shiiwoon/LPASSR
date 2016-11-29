@@ -8,3 +8,65 @@ MMC : accès aux fichiers du serveur
 Batch : Cmd.exe
 VBScript
 PowerShell
+
+Avec une licence standart, on ne peut installer que 2 VM. Avec une licence datacenter, il n'y a pas de limitation de VM.
+On peut acheter plusieurs licences standart pour aller sur un seul PC.
+En 2016, on est taxé si on a plus de 8 coeur par CPU.
+
+
+
+-------------------------------------------------------------------------------------------------------------------------
+--Filesystem
+
+Manière de stocker et organiser les fichiers
+
+On relie des données à des metadonnées
+
+Pour voir ça sous doz, aller dans les propriétés puis détails.
+
+Les plus communs : FAT, NTFS, ext3/ext4, ReFS
+
+Le filesystem définit la limite
+Ex : en FAT32, un fichier ne peut pas faire plus de 4GB.
+
+!Les machines de l'IUT ne lisent pas le NTFS.
+
+NTFS
+Principale limite : un nom de fichier, comprenant le chemin du dossier ne doit pas dépasser 255 caractères.
+On gère les permissions d'un dossier ou fichier avec des ACL
+
+L'interdiction est prioritaire sur l'autorisation.
+Les autorisations sont commulatives : les droits du groupe sont automatiquement donnés aux utilisateurs. On peut ensuite ajouter des droits pour un utilisateur en particulier(Le refus prime sur les droits du groupe).
+
+Par défaut, un fichier reprend les droits de son parent, mais rien n'empêche d'en définir d'autres.
+
+-------------------------------------------------------------------------------------------------------------------------
+--Partage de fichier
+Avoir une seule copie du fichier sur le réseau
+Éviter les mails et pb de taille de pièce ojinte
+Serveur : faire des sauvegardes pour tout le monde, rien n'est perdu.
+
+Pour accéder à un serveur à distance, on utilise un chemin UNC (universal naming convention) :
+\\nomServeur\nompartage\nomdossier
+
+Pour simplifier les choses, on peut créer des lecteurs réseau.
+Pour en créer : chemin UNC puis clic droit/connecter un lecteur réseau
+
+Les droits du partage sont différents de ceux du NTFS, et sont indépendants : lecture, écriture, contrôle total.
+Les droits finaux dépendent des deux systèmes de droits, les interdictions étant prioritaires sur les autorisations.
+
+--
+Créer un partage
+1) Définir les droits NTFS
+2) Cliquer sur partager ce dossier dans Avancé de l'onglet Sécurité
+
+OU
+
+Clic droit/partage/partage
+Mais attention : va donner les droits à tous les fichiers à tout le monde jusqu'à la racine.
+
+-------------------------------------------------------------------------------------------------------------------------
+--Active directory
+
+Active directory : annuaire, principalement de la lecture.
+Utilise la normale LDAP

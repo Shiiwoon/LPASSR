@@ -1,0 +1,11 @@
+set passwd [lindex $argv 0]
+
+spawn bash
+expect "$" 
+
+spawn ssh roxa@127.0.0.1
+expect "': " 
+
+send "$passwd\r"
+expect "Last login"
+
