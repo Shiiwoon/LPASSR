@@ -70,3 +70,15 @@ Mais attention : va donner les droits à tous les fichiers à tout le monde jusq
 
 Active directory : annuaire, principalement de la lecture.
 Utilise la normale LDAP
+
+-------------------------------------------------------------------------------------------------------------------------
+--Les GPO, liaisons et tout le bordel
+
+! : jour du DS, va demander la hiérarachie des domaines (foret > ? > ? > ?) -> Va chercher
+
+GPO : faire attention au cocnflits : il y a un ordre d'application des GPO.
+GPO appliquée : la plus "proche" du PC
+Il est possible de bloquer l'héritage, mais il vaut mieux éviter de le faire : des politiques importantes (changement mdp forcé par exemple) ne seront pas importées. On peut cependant faire un clic droit pour "passer outre" sur la GPO pour qu'elle soit héritée quand même.
+Si on fait clic droit/Appliquer sur une GPO, elle sera prioritaire sur celles d'en dessous. DOnc à éviter.
+gpupdate (/force): faire descendre les GPO sans attendre les 180 minutes/reboot de l'ordi. On doit être utilisateur du compte pour faire descendre. -> Modif configuration UTILISATEUR. Si on veut faire pareil mais pour le PC, lancer le batch en Administrateur.
+gpresult -H C:\temp\rapport.html -> Crée un rapport des GPO

@@ -1,0 +1,34 @@
+Le hub c'est pas bien parce qu'il envoie tout à tout le monde en permanance. Du coup ça fait des collisions et c'est pas cool, même si on a inventé le CSMA/CD. Si deux PC parlent en même temps sur le réseau : collision. Avec CSMA/CD : 
+On ne peut pas faire une cascade de plus de 5 hubs/switchs : car les PC sont trop éloignés ensuite et ça les oblige à parler pendant trop de temps en cas de collision. De préférence, on ne branche pas en cascade.
+
+En WiFi, on fait du CSMA/CA.
+
+Rôle du switch : faire communiquer les PC
+Le switch crée un liaison virtuelle entre les deux ports pour faire communiquer les PC ensemble.
+Les paramètres pour établir connexion ; @MAC source et @MAC destination.
+Dans l'ordre de la trame : destionation puis source.
+Imaginons que la table CAM soit vide.
+A veut communiquer avec B
+1) Il enregistre l'@ de A à son numéro de port dans la table CAM;
+2) Il envoie à tous sauf le port d'entrée
+3) B répond, il l'enregistre dans sa table
+4) Il crée un lien virtuel entre le port de A et le port de B
+
+La table CAM est généralement vidée toutes les 50 secondes. Mais il est reset à 50 dès que le PC parle : ne pas reset quand 2 PC sont en train de communiquer.
+
+Rx : ecouter
+Tx : emettre
+
+Pour que ça fonctionne, il faut relier l'emetteur au recepteur dans les deux sens.
+
+Les switchs ont exprès les ports "à l'envert" pour ne pas avoir à faire du cablage croisé. Du coup on est obligé de faire du cablage croisé entre deux switchs (sur les vieux).
+Il faut aussi mettre un cable croisé pour communiquer avec un routeur.
+
+VLAN : switch virtuel
+Sur les "gros" switchs, on a de base un VLAN qui fait tous les ports.
+
+On peut demander au switch de réserver un port à une adresse MAC pour pas se faire chier à entrer toutes les adresses MAC à la main.
+
+Attention aux "tempêtes de broadcast" : si on branche dans les deux sens des switchs
+
+Trames 802.1Q : trames avec un champ en plus qui disent de quel VLAN provient une trame.
