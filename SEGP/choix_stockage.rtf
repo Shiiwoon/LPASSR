@@ -1,0 +1,61 @@
+Quand on fait un système de fichier linux, penser à :
+Swap : pas plus de 8 Go, au dessus c'est pas super utile.
+Attention à bien mettre une partition séparée pour tout gros dossier (ex /home, /var/www...) -> évite qu'un boulet ou un utilisateur malveillant remplisse le disque et empêche le serveur de fonctionner correctement.
+
+XFS : ancien et sophistiqué (dev par pixar sur une debian, rapide, capacité de stockage élevée, GROS fichiers) -> Nickel pour l'audiovisuel, serveur de fichiers. Pas mal pour mettre un /home. Journalisé, 64bits
+
+btrfs : un peu comme XFS, avec capacité de snapshot, mais au niveau du disque directement. Ça lui prend très peu de temps à reprendre son état d'il y a quelques minutes. Journalisé, 64bits
+
+ext4 : très fiable, le journal ne plante pas même en cas de défaillance du disque.
+
+NTFS : vieux, et commence à ramer par rapport aux nouveaux systèmes.
+
+RAID
+
+Attention : il y a souvent des batteries sur les controleurs RAID, quand elles meurent ça fout le bordel.
+Les pilotes des cartes RAID sont rarement mis à jour régulièrement, ça pose souvent problème si on veut mettre à jour son système.
+
+RAID 0 : distribue les données entre deux disques. Très bon pour la performance. Pb : si on perd un disque, on perd tout : on écrit une PARTIE d'une donnée sur chaque disque, donc illisible si on perd un disque.
+
+Mieux vaut utiliser du RAID 0 avec du RAID 1. C'est très utilisé dans les SAN car moins cher, moins gourmand en énergie et plus performant. S'utilise bien jusqu'à 5/6 disque, pour plus mieux vaut passer sur du RAID 5/6.
+
+RAID 1 : penser à avoir un hostspare : troisième disque pour être sur, lancé automatiquement s'il y en a un qui lache.
+Le controleur RAID controle des blocs, pas des données -> synchro parfaite entre les deux disques. Les erreurs sont gérées de manière native par les disques
+
+RAID 5 : On copie un bout du disque sur chaque autre disque. Donc meilleurs perfs, moins de perte d'argent (besoin de moins de disques pour la même capacité de stockage)
+Pb : on ne peut pas perdre plus d'un disque !
+Il demande pas mal de ressources au controleur RAID
+
+RAID 6 : on double les informations de parité. -> capacité de N-2. Mieux vaut avoir deux disques de spare pour être sur. Reconstruire un disque prend du temps.
+
+-----------------------------------------------------------------------------------------------------------------------------
+NAS
+Serveur de fichiers fonctionne avec FTP, SMTP, P2P, SSH, HHTP, DAV
+Attention : son OS doit être à jour, désactiver TOUS les services inutilisés. C'est un point d'entré facile pour rentrer dans un réseau.
+Ex de NAS : synology (le plus courant)
+On a une couche virtuelle qui s'occupe de tout, l'OS voit juste un espace de stockage.
+Pb : souvent non POSIX : pb avec FTP par exemple (pas même gestion des droits)
+Par défaut, pas de loadbalancing.
+
+NFS : Utiliser un système de fichiers à distance : passe par le réseau.
+
+CIFS/SMB : racheté par MS. Sympa : tout le monde le comprends. Nul : pas de boot à distance.
+SMB2 : avantages NFS & CIFS mais on peut boot que sur du doz.
+Attention : toutes les données transitent en clair sur le réseau !
+
+SAN : exposer un disque dur. Des blocs transitent : "langage disque dur" -> plus rapide. Par contre si on s'amuse à débrancher le cable, c'est comme si on débranchait un disque à chaud.
+Il faut un réseau spécifique : switchs & co spéciaux. Plus sécurisé, plus cher.
+En plus il faut obligatoirement 2 switchs, parce que si y'en a un qui plante plus rien ne fonctionne.
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+LVM : construit en 3 couches. Pratique si le nombre de partition ne correspond pas au nombre de disques.
+Principe : RAID 0 sur des disques virtuels.
+On crée ensuite des volumes logiques basés sur le RAID 0 qu'on avait créé.
+-----------------------------------------------------------------------------------------------------------------------------
+Questions à poser à Oxalide :
+Utilise beaucoup de SSD ?
+Capacité moyen disques ?
+RAID majoritaire ? Client décide ?
+Utilisation du SATA ?
+
