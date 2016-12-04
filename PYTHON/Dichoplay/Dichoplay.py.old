@@ -1,18 +1,22 @@
+#!/usr/bin/env python3
 # coding: utf-8
 from random import randint
 
 
 def feedback(nb_a_trouver, nb_entre, coups_restants, coups) :
 	print("Nombre à trouver : ", nb_a_trouver)
-	if coups_restants > 1 and nb_entre != nb_a_trouver :
-		print("Le nombre a trouver est plus petit" \
-			if nb_entre > nb_a_trouver else \
-			"Le nombre a trouver est plus grand")
-		return 0
-	elif nb_entre == nb_a_trouver :
-		print("Bravo ! Tu as trouvé en ", coups, "coups !" \
-			if coups_restants > 1 else \
-			"Bravo, tu as gagné au dernier tour ! ")
+	if coups_restants > 1 :
+		if nb_entre > nb_a_trouver :
+			print("Le nombre a trouver est plus petit")
+			return 0
+		elif nb_entre < nb_a_trouver :
+			print("Le nombre a trouver est plus grand")
+			return 0
+		else :
+			print("Bravo ! Tu as trouvé en ", coups, "coups !")
+			return 1
+	elif coups_restants == 1 and nb_entre == nb_a_trouver :
+		print("Bravo, tu as gagné au dernier tour ! ")
 		return 1
 	else : 
 		print("Perdu, le nombre cherché était ", nb_a_trouver)
