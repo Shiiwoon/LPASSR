@@ -21,3 +21,4 @@ fi
 
 ## Nota :
 Il existe une variable IFS permettant de définir le délimiteur par défaut
+
