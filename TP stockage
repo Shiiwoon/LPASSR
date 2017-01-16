@@ -1,0 +1,132 @@
+https://git.karolak.fr/assr/tp-tls/blob/master/02-consignes_tp.md
+
+I) Création du RAID
+
+1) Installer la machine debian :
+Prendre la machine virtuelle et la lancer
+
+2) Installer des disques durs supplémentaires :
+Sur VB :
+	- éteindre la VM
+	- cliquer sur la VM
+	- cliquer sur configuration
+	- Aller dans l'onglet Stockage
+	- cliquer sur la ligne Controleur : SATA 
+	- sur la même ligne, cliquer sur l'icone disque
+	- créer un nouveau disque, lui donner un nom
+	
+
+3) Créer un RAID 0 sur /dev/sdb -> /dev/sdc :
+
+# mdadm --create /dev/md0 --level=1 --raid-device=2 /dev/sdb /dev/sdc 
+
+Puis on check : 
+
+# mdadm -D /dev/md0
+Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+
+Donc c'est ok.
+
+
+4) Ajout d'un spare pour ce RAID :
+
+# mdadm --manage /dev/md0 --add /dev/sdd
+
+Puis on check :
+
+# mdadm -D /dev/md0
+Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+
+       2       8       48        -      spare   /dev/sdd
+
+On a bien une ligne avec spare /dev/sdd, donc c'est ok.
+
+
+II) Création de LVM
+
+1) On installer pvcreate
+# apt-get install lvm2
+
+2) Création des volumes logiques :
+
+# pvcreate /dev/md0
+  Writing physical volume data to disk "/dev/md0"
+  Physical volume "/dev/md0" successfully created
+
+// On a créé le volume logique basé sur le RAID qu'on a fait juste avant
+
+
+3) Ensuite on crée un groupe de volumes :
+# vgcreate groupevol /dev/md0
+  Volume group "groupevol" successfully created
+
+4) On crée deux volumes logiques basé sur le groupe de volumes :
+lvcreate -n vol1 -L 256M groupevol
+lvcreate -n vol2 -L 256M groupevol
+
+5) Puis on crée le système de fichiers de vol1 et vol2 (qui étaient vierges jusqu'à présent)
+
+# mkfs -t ext3 /dev/groupevol/vol1
+# mkfs -t ext3 /dev/groupevol/vol2
+
+6) On monte les volumes :
+
+mkdir /mnt/lv1 && mount /dev/groupevol/vol1 /mnt/lv1
+mkdir /mnt/lv2 && mount /dev/groupevol/vol2 /mnt/lv2
+
+
+III) Modifier les disques sans éteindre la VM
+
+1) Agrandir à chaud le système de fichiers de vol2 = 512 Mo (On lui avait donné 256Mo)
+
+# lvresize -L 512M /dev/groupevol/vol2 // Agrandir le volume logique
+# resize2fs -p /dev/groupevol/vol2 512M // Agrandir le système de fichiers
+
+On check avec df :
+# df -h
+/dev/mapper/groupevol-vol1                               248M   11M  226M   5% /mnt/lv1
+/dev/mapper/groupevol-vol2                               496M   11M  460M   3% /mnt/lv2
+
+
+2) Remplacement d'un disque RAID à chaud
+- On simule la panne d'un disque :
+
+# mdadm --fail /dev/md0 /dev/sdc 
+mdadm: set /dev/sdc faulty in /dev/md0
+
+- On reconstruit le RAID grâce à notre disque de spare :
+# mdadm --manage --remove /dev/md0 /dev/sdc
+mdadm: hot removed /dev/sdc from /dev/md0
+
+# mdadm --manage --add /dev/md0 /dev/sdc
+mdadm: added /dev/sdc
+
+# mdadm -D /dev/md0
+       0       8       16        0      active sync   /dev/sdb
+       2       8       48        1      active sync   /dev/sdd
+
+       3       8       32        -      spare   /dev/sdc
+
+
+--> Le disque defectueux s'est mis en spare
+- On sauvegarde la conf RAID : 
+mdadm --detail --scan >> /etc/mdadm/mdadm.conf
+
+IV) Configuration de serveurs GlusterFS
+
+1) On installe glusterfs : 
+# apt-get update && apt-get install glusterfs-server
+
+V) Configurer VB pour faire communiquer les machines ensemble
+On commence par créer un réseau NAT : Fichier/Paramètres/Réseau/Réseau Nat/+
+Puis on configure les machines sur Réseau NAT plutôt que sur NAT
+--> NAT : un réseau NAT par machine
+--> réseau NAT : un réseau NAT avec plusieurs machines.
+
+
+http://eprel.u-pec.fr/eprel/claroline/backends/download.php?url=L1N0b2NrYWdlL3RwX3N0b2NrYWdlLnBkZg%3D%3D&currentTime=1480683089&cidReset=true&cidReq=1121
+

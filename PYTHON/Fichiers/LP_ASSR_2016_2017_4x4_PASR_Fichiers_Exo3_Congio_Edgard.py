@@ -4,9 +4,10 @@
 ####################################################################################################################
 ## Auteurs : Jorane Congio; Fabrice Edgard
 ## Date : 14/12/2016
-## Titre : Ex4 Fichiers
+## Titre : Ex3 Fichiers
 ## Consigne : Demander à l'utilisateur  d'entrer un chemin vers un répertoire, un mot et un rapport
 ## puis écrire dans le rapport tous les mots commençants par le mot donné à partir du dossier entré par l'utilisateur
+## Bonus : Compatibilité Linux / Windows / MacOS + Parcours des sous répertoires
 ####################################################################################################################
 
 
