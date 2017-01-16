@@ -2,4 +2,7 @@ snapshot/instantané : création d'un second fichier de VM pour permettre d'annu
 
 Attention : création des snapshot il faut préciser le bon dossier (/data/etudiants)
 
+Proxy de merde :
 
+# vi /etc/apt/apt.conf
+Acquire::http::Proxy "http://proxy2.iutsf.lan:3128"
