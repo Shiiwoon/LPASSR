@@ -35,7 +35,24 @@ Retirer un élément :
 ```python
 list_CPU.remove('i7-6700K')
 ```
-Bien comprendre comment on désigne un élément d'une liste ! Si on avait écrit list_CPU.remove(i7-6700K), on aurait obtenu cette erreur :
+
+Désigner un élément d'une liste :
+Pour désigner un élément, on utilise son indice. Les indice sont numérotés à partir de 0 !
 ```python
+>>> print(list_CPU[0])
+Xeon-E5506
+```
+Attention : Python réattribue les indices dès qu'on fait une modification sur la liste. Ici, on a retiré le premier élément de la liste, le premier élément est donc à présent Xeon-E5506
+
+Dans certaines fonctions propres à l'objet list, on doit utiliser la valeur pour désigner un indice. Par exemple, nous avons écrit list_CPU.remove('i7-6700K') et pas list_CPU.remove(0). Si on l'avait fait, on aurait obtenu cette erreur :
+```
+ValueError: list.remove(x): x not in list
+```
+En effet, python pense que l'on souhaite retirer la *valeur* 0, pas l'indice. Il nous indique donc qu'il n'a pas trouvé la valeur 0 dans la liste.
+Si on avait écrit list_CPU.remove(i7-6700K), on aurait obtenu cette erreur :
+```
 NameError : name I7-6700K is not defined
 ```
+Dans le cas présent, python essaie de trouver une *variable* qui porterait le nom i7-6700K.
+
+Pourquoi n'a-t-on pas obtenu la même erreur dans les deux cas ? Il faut bien garder à l'esprit que les chiffres et les caracères sont très différents en programmation. L'instruction a = 0 a du sens : on déclare une variable a qui a pour valeur 0. En revanche, l'instruction b = EXDE ne veut rien dire : que repréente AEFE ? Une nom de variable ? Une chaine de caractères ? Un nombre hexadécimal ?
