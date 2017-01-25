@@ -55,4 +55,19 @@ NameError : name I7-6700K is not defined
 ```
 Dans le cas présent, python essaie de trouver une *variable* qui porterait le nom i7-6700K.
 
-Pourquoi n'a-t-on pas obtenu la même erreur dans les deux cas ? Il faut bien garder à l'esprit que les chiffres et les caracères sont très différents en programmation. L'instruction a = 0 a du sens : on déclare une variable a qui a pour valeur 0. En revanche, l'instruction b = EXDE ne veut rien dire : que repréente AEFE ? Une nom de variable ? Une chaine de caractères ? Un nombre hexadécimal ?
+Pourquoi n'a-t-on pas obtenu la même erreur dans les deux cas ? Il faut bien garder à l'esprit que les chiffres et les caractères sont très différents en programmation.
+
+L'instruction `a = 0` a du sens : on déclare une variable a qui a pour valeur 0. En revanche, l'instruction `b = EXDE` ne veut rien dire : que repréente AEFE ? Une nom de variable ? Une chaine de caractères ? Un nombre hexadécimal ?
+
+
+## Cas d'utilisation
+#### Déclarer et afficher
+#### Transformer un fichier en liste
+#### Somme des éléments
+#### Moyenne des éléments
+#### Vérifier si une liste contient un élément
+#### Supprimer les doublons
+#### Séparer une liste
+
+## Erreurs courantes et leur résolution
+1 - Utiliser le mauvais type de délimiteur au moment de la création de la liste : `a = ('a', 'b')`, `a = ['a', 'b']` et `a = {'a', 'b'}` ont une signification très différente.
