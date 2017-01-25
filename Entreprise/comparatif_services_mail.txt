@@ -1,0 +1,19 @@
+1) IRedMail
+
+Fonctionnalités :
+	- installe et configure tous les paquets nécessaires tout seul (serveur web, bdd & co)
+	- Permet de scripter des taches de base (ajout d'utilisateurs par exemple)
+
+Mode d'installation et mise à jour : script bash
+
+Avantages :
+	- installation rapide
+	- léger, facilement modifiable
+
+Inconvénients :
+	- gestion d'erreurs pas terrible, m'a totalement planté une VM
+	- basique
+	- devoir partir d'un serveur "clean" -> ne pas déjà avoir de BDD ou serveur web configuré car il remplace tous les fichiers par des neufs.
+
+
+2) Zimbra
