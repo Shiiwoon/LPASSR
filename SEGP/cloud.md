@@ -39,3 +39,6 @@ ROI : Return on Investment
 - Que devient l'admin réseau ?
 - Sécurité des données ?
 - Pas tous les services, surtout du web
+- 
+
+CDN : accélérer la livraison des sites web et d'autres contenu vidéo et ressources web -> Réseau de serveurs disséminés à plusieurs endroits
