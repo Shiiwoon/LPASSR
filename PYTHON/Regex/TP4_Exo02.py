@@ -10,10 +10,9 @@
 #############################################################
 
 import re
-import os
 
 def get_list_file():
-# Retourne le contenu d'un fichier sous forme de liste
+## Retourne le contenu du fichier d'entrée sous forme de liste
 	fichier = open('RegExpTP4_Ex2.txt', 'r')
 	list_lignes = list()
 	for line in fichier:
@@ -23,6 +22,8 @@ def get_list_file():
 
 
 def afficheTitre(titre):
+## Affiche la chaine de caractères passée en paramètre
+##  dans le fichier de sortie en l'encadrant avec des étoiles
 	fichier = open('SortieRegExpTP4_Ex2.txt', 'a')
 	fichier.write('*' * len(titre) + '\n')
 	fichier.write(titre + '\n')
@@ -30,6 +31,8 @@ def afficheTitre(titre):
 	fichier.close()
 
 def afficheLignes(regex, lignes):
+## Affiche les expressions qui matchent avec la regex
+##  dans le fichier de sortie
 	fichier = open('SortieRegExpTP4_Ex2.txt', 'a')
 	compteur_lignes = 0
 	for l in lignes:
@@ -41,9 +44,10 @@ def afficheLignes(regex, lignes):
 
 ## Programme principal
 if __name__ == '__main__':
-	os.remove('SortieRegExpTP4_Ex2.txt')
-	list_lines = get_list_file()
-	list_reg = [\
+	
+	afficheTitre("PYTHON : Fichier de sortie de l'exercice 2 du TP4") # Écrire nom rapport dans fichier sortie
+	list_lines = get_list_file() # Récupérer une liste des lignes du fichier
+	list_reg = [\ # Liste de tuples : expression régulière <-> titre
 		('[A-Z0-9]', '1.a : lignes contenant des chiffres ou des majuscules'), \
 		('\.', '1.b : lignes contenant des points'), \
 		('\.\.\.', '1.c : lignes conentant trois points'), \
@@ -53,7 +57,7 @@ if __name__ == '__main__':
 		('\[|\]', '1.g : lignes contenant des crochets ( ] ou [ )'), \
 		('^[a ]+$', '1.h : lignes ne contenant que des lettres a et des espaces'), \
 		('(\d+\.){3}\d', '1.i : lignes contenant quelque chose qui ressemble a une adresse IP'), \
-		('^[^.]$', '2.a : lignes vides'), \
+		('^[\n]$', '2.a : lignes vides'), \
 		('^[ ]+$', '2.b : lignes blanches'), \
 		('.', '2.c : lignes non vides'), \
 		('^[^a]+$', '3.a : lignes qui ne contiennent pas de a'), \
@@ -64,8 +68,10 @@ if __name__ == '__main__':
 		('^(\(0\)|0)\d(( |-|.)\d\d){4}', '6 : idem 5 mais le 0 peut être entoure de parentheses'), \
 		('(0|\(0\))(( |.| |-)\d\d\d){3}$', '7 : terminent par un tel au format 0 123 456 789, espaces, - ou . et (0)')
 	]
-
+	
+	# On parcourt la liste 
 	for reg, titre in list_reg:
-		afficheTitre(titre)
-		afficheLignes(reg, list_lines)
+		afficheTitre(titre) # On affiche le titre de la regex dans le fichier de sortie
+		afficheLignes(reg, list_lines) # On traite les lignes de la liste 
+			# et on écrit dans le rapport celles qui matchent avec la regex
 
