@@ -39,10 +39,10 @@ trouver des failles.
 
 Les SGBD personnels :
 	LibreOffice, Filemaker, Interbase, Microsoft Access -> JAMAIS utiliser pour des trucs pro. --> Pas fait pour. Pas sécurisé, sauvegarde pas terribles etc.
-	----------
+
 	
 ## MySQL
-## Installation:
+#### Installation:
 ```bash
 sudo apt-get update
 sudo apt-get install apache2 mysql-client mysql-server php5 php5-mysql
@@ -55,7 +55,7 @@ echo '<?php phpinfo(); ?>' > /var/www/html/info.php
 ```
 Puis tester sur navigateur :  http://localhost:8080/info.php
 
-## Commandes MySQL
+#### Commandes MySQL
 
 Se co à la bdd :
 
@@ -107,7 +107,7 @@ Sécuriser la BDD :
 mysql_secure_installation
 ```
 
-### Récupérer mdp root
+#### Récupérer mdp root
 1 - stopper mysql :
 ```bash
 service mysql stop
@@ -132,7 +132,7 @@ service mysql stop
 service mysql start
 ```
 
-### Superviser bases
+## Superviser bases
 Installer mytop :
 ```
 sudo apt-get install mytop
@@ -143,7 +143,7 @@ Observer une base en particulier :
 mytop --prompt -d nom_base
 ```
 
-### Sauvegarder base
+## Sauvegarder base
 
 Sauvegarde à chaud :
 ```bash
@@ -161,7 +161,7 @@ ou
 mysql -u myuser -p < /chemin/vers/save.sql
 ```
 
-### Migration MySQL vers MariaDB
+## Migration MySQL vers MariaDB
 Installer mariadb :
 ```bash
 apt-get install python-software-properties
@@ -169,7 +169,7 @@ apt-get install mariadb-server
 ```
 Et tout est ok, il va juste demander un nouveau mdp root
 
-### psql
+## PostgreSQL
 
 Se mettre en mode postgres :
 ```bash
