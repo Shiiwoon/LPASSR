@@ -1,5 +1,6 @@
 # BDD
 
+### Intro
 Au début[1960], on avait les bases sur des fichiers texte. PC pas puissants, il fallait optimiser l'accès et on avait pas non plus des requêtes de malade. Les accès étaient séquentiels, pas relationnels.
 
 [1970] : premières bases de données réseau. Ensemble de fichiers reliés par des pointeurs, langage d'interrogation par
@@ -38,7 +39,9 @@ trouver des failles.
 
 Les SGBD personnels :
 	LibreOffice, Filemaker, Interbase, Microsoft Access -> JAMAIS utiliser pour des trucs pro. --> Pas fait pour. Pas sécurisé, sauvegarde pas terribles etc.
-
+	----------
+	
+## MySQL
 ## Installation:
 ```bash
 sudo apt-get update
@@ -158,7 +161,7 @@ ou
 mysql -u myuser -p < /chemin/vers/save.sql
 ```
 
-## Migration MySQL vers MariaDB
+### Migration MySQL vers MariaDB
 Installer mariadb :
 ```bash
 apt-get install python-software-properties
@@ -166,7 +169,7 @@ apt-get install mariadb-server
 ```
 Et tout est ok, il va juste demander un nouveau mdp root
 
-## psql
+### psql
 
 Se mettre en mode postgres :
 ```bash
