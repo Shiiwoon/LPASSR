@@ -1,9 +1,10 @@
 # BDD
 
-Au début[1960], on avait les bases sur des fichiers texte. PC pas puissants, il fallait optimiser l'accès et on avait pas non plus
-des requêtes de malade. Les accès étaient séquentiels, pas relationnels.
+Au début[1960], on avait les bases sur des fichiers texte. PC pas puissants, il fallait optimiser l'accès et on avait pas non plus des requêtes de malade. Les accès étaient séquentiels, pas relationnels.
+
 [1970] : premières bases de données réseau. Ensemble de fichiers reliés par des pointeurs, langage d'interrogation par
 navigation.
+
 [1980] Bases de données relationnelles, relation entre un ensemble de données. 
 
 Relationnel : éviter la redondance de données. Centraliser et organiser les données. 
@@ -23,18 +24,35 @@ Bonne gestion des accès concurrents, cohérence conservée. Pas possible de con
 Gestion des utilisateurs / droits sur la base. mdp, privilèges d'accès différents selon utilisateurs / Groupes.
 
 Les SGBD principaux :
+
 Oracle, IBM, Microsof, MySQL/MariaDB, PostgreSQL
+
 Oracle : + fonctionnalités
+
 MySQL : - fn que Oracle, gratuit
+
 MariaDB : ĉ oracle gratuit -> meilleurs cluster, plus grande commu.
+
 PostgreSQL : bcp utilisé ds domaines pointus, un peu plus complexe à mettre en oeuvre. Petite commu donc moins de chance de
 trouver des failles.
 
 Les SGBD personnels :
 	LibreOffice, Filemaker, Interbase, Microsoft Access -> JAMAIS utiliser pour des trucs pro. --> Pas fait pour. Pas sécurisé, sauvegarde pas terribles etc.
 
+## Installation:
+```bash
+sudo apt-get update
+sudo apt-get install apache2 mysql-client mysql-server php5 php5-mysql
+vi /etc/mysql/my.cnf # Remplacer bind address par 0.0.0.0 pour pas s'embêter
 
-## Commandes utiles
+```
+Tester php :
+```bash
+echo '<?php phpinfo(); ?>' > /var/www/html/info.php
+```
+Puis tester sur navigateur :  http://localhost:8080/info.php
+
+## Commandes MySQL
 
 Se co à la bdd :
 
@@ -42,6 +60,10 @@ Se co à la bdd :
 mysql -u username -h host -p
 ```
 
+Voir les bases :
+```
+SHOW DATABASES;
+```
 
 Créer un utilisateur :
 ```
@@ -52,6 +74,11 @@ CREATE USER 'username'@'host' IDENTIFIED BY 'passwd';
 Créer une table:
 ```
 CREATE DATABASE table;
+```
+
+Supprimer une table :
+```
+DROP DATABASE table;
 ```
 
 
@@ -117,9 +144,9 @@ mytop --prompt -d nom_base
 
 Sauvegarde à chaud :
 ```bash
-(MYSQL_PWD=mdp)
-mysqldump --user=root --all-databases | gzip > save.sql.gz
+mysqldump --user=root -p 'le mot de passe' --all-databases | gzip > save.sql.gz
 ```
+
 Restauration :
 ```
 mysql -u user -p
