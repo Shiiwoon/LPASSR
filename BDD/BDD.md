@@ -144,7 +144,7 @@ mytop --prompt -d nom_base
 
 Sauvegarde à chaud :
 ```bash
-mysqldump --user=root -p 'le mot de passe' --all-databases | gzip > save.sql.gz
+mysqldump --user=root --all-databases -p > save.sql.gz
 ```
 
 Restauration :
@@ -157,6 +157,14 @@ ou
 ```bash
 mysql -u myuser -p < /chemin/vers/save.sql
 ```
+
+## Migration MySQL vers MariaDB
+Installer mariadb :
+```bash
+apt-get install python-software-properties
+apt-get install mariadb-server
+```
+Et tout est ok, il va juste demander un nouveau mdp root
 
 ## psql
 
